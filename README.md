@@ -1,7 +1,13 @@
-## Stackoverflow Clone
- - Live: http://clone-of-stackoverflow.vercel.app/
+<a href="https://community.upvision.co">
+  <p align="center">
+      <img alt="UpVision" src="./src/images/logo.svg" width="100" />
+  </p>
+  <h1 align="center">
+    Upvision Community Back-End
+  </h1>
+</a>
 
-This project is a simplified a full stack clone of Stackoverflow. I wrote it to learn more about Nodejs, React/Next, pixel perfect design and NoSQL databases in general. Feel free to contribute!
+This project was bootstrapped from the stackoverflow-clone made by @salihozdemir available [here](https://github.com/salihozdemir/stackoverflow-clone)
 
 ## :rocket: Tech Stack
 
