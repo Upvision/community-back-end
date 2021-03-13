@@ -19,7 +19,8 @@ const questionSchema = new Schema({
   comments: [commentSchema],
   answers: [answerSchema],
   created: { type: Date, default: Date.now },
-  views: { type: Number, default: 0 }
+  views: { type: Number, default: 0 }, 
+  edited: {type: Boolean, default: false}
 });
 
 questionSchema.set('toJSON', { getters: true });
@@ -65,6 +66,15 @@ questionSchema.methods = {
     if (!comment) throw new Error('Comment not found');
     comment.remove();
     return this.save();
+  },
+
+  EditComment: function(id, body, author){
+    const comment = this.comments.id(id);
+    if (!comment) throw new Error('Comment not found');
+    comment.edited=true;
+    comment.author=author;
+    comment.body=body;
+    return this;
   },
 
   addAnswer: function (author, text) {
