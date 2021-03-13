@@ -18,7 +18,7 @@ exports.loadComments = async (req, res, next, id) => {
   }
   next();
 };
-
+ 
 exports.createComment = async (req, res, next) => {
   const result = validationResult(req);
 
@@ -43,6 +43,28 @@ exports.createComment = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.editComment = async (req, res, next) => {
+  const result = validationResult(req);
+  if (!result.isEmpty()) {
+    const errors = result.array({ onlyFirstError: true });
+    return res.status(422).json({ errors });
+  }
+  try {
+      const { id } = req.user;
+      const { comment } = req.body;
+      if(req.params.answer){
+        req.answer.EditComment(req.params.comment, comment, id);
+        const question = await req.question.save();
+        return res.status(201).json(question);
+      }
+      req.question.EditComment(req.params.comment, comment, id);
+      const question = await req.question.save();
+      return res.status(201).json(question);
+  } catch (error) {
+    next(error);
+  }
+}
 
 exports.removeComment = async (req, res, next) => {
   const { comment } = req.params;
