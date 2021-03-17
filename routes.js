@@ -2,6 +2,7 @@ const {
   validateUser,
   signup,
   authenticate,
+  googlelogin,
   listUsers,
   search,
   find
@@ -36,6 +37,7 @@ const router = require('express').Router();
 //authentication
 router.post('/signup', validateUser, signup);
 router.post('/authenticate', validateUser, authenticate);
+router.post('/googlelogin', googlelogin);
 
 //users
 router.get('/users', listUsers);
