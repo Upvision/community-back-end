@@ -47,6 +47,15 @@ answerSchema.methods = {
     return this;
   },
 
+  EditComment: function(id, body, author){
+    const comment = this.comments.id(id);
+    if (!comment) throw new Error('Comment not found');
+    comment.edited=true;
+    comment.author=author;
+    comment.body=body;
+    return this;
+  },
+
   removeComment: function (id) {
     const comment = this.comments.id(id);
     if (!comment) throw new Error('Comment not found');

@@ -1,8 +1,12 @@
 const User = require('../models/user');
 const jwtDecode = require('jwt-decode');
 const { body, validationResult } = require('express-validator');
+const {OAuth2Client} = require('google-auth-library');
 
 const { createToken, hashPassword, verifyPassword } = require('../utils/authentication');
+// const { response } = require('express');
+
+const client = new OAuth2Client("613584530661-s728h4rlgc4f63tnjaeg13s7dvb19vnk.apps.googleusercontent.com");
 
 exports.signup = async (req, res) => {
   const result = validationResult(req);
@@ -15,7 +19,6 @@ exports.signup = async (req, res) => {
     const { username } = req.body;
 
     const hashedPassword = await hashPassword(req.body.password);
-
     const userData = {
       username: username.toLowerCase(),
       password: hashedPassword
@@ -24,7 +27,7 @@ exports.signup = async (req, res) => {
     const existingUsername = await User.findOne({
       username: userData.username
     });
-
+    console.log("a-0")
     if (existingUsername) {
       return res.status(400).json({
         message: 'Username already exists.'
@@ -47,7 +50,7 @@ exports.signup = async (req, res) => {
         created,
         profilePhoto
       };
-
+      console.log("a-1")
       return res.json({
         message: 'User created!',
         token,
@@ -168,3 +171,29 @@ exports.validateUser = [
     .isLength({ max: 50 })
     .withMessage('must be at most 50 characters long')
 ];
+
+exports.googlelogin = (req,res) => {
+  const {tokenId} = req.body;
+  console.log(req.body);
+  client.verifyIdToken({idToken: tokenId, audience:"613584530661-s728h4rlgc4f63tnjaeg13s7dvb19vnk.apps.googleusercontent.com"}).then(response => {
+    const{email_verified, name, email} = response.payload;
+    console.log("0")
+    if(email_verified)
+    {
+            var up = email.split('@');
+            if(up[1]!= "nitdelhi.ac.in")
+            {
+              res.json( {status:false})
+            }
+            else{
+              console.log("yes")
+              res.json( {status:true})
+            }
+    }
+    else{
+            return res.status(400).json({
+             message: 'There was a problem creating your account.'
+             });
+    }
+  })
+}

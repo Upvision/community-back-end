@@ -8,7 +8,8 @@ const commentSchema = new Schema({
     required: true
   },
   body: { type: String, required: true },
-  created: { type: Date, default: Date.now }
+  created: { type: Date, default: Date.now }, 
+  edited: {type: Boolean, default: false}
 });
 
 commentSchema.set('toJSON', { getters: true });
