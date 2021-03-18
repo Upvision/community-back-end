@@ -5,8 +5,8 @@ const {OAuth2Client} = require('google-auth-library');
 
 const { createToken, hashPassword, verifyPassword } = require('../utils/authentication');
 // const { response } = require('express');
-
-const client = new OAuth2Client("613584530661-s728h4rlgc4f63tnjaeg13s7dvb19vnk.apps.googleusercontent.com");
+const clientID = process.env.GOOGLE_AUTH || "0";
+const client = new OAuth2Client(clientID);
 
 exports.signup = async (req, res) => {
   const result = validationResult(req);
@@ -175,7 +175,7 @@ exports.validateUser = [
 exports.googlelogin = (req,res) => {
   const {tokenId} = req.body;
   console.log(req.body);
-  client.verifyIdToken({idToken: tokenId, audience:"613584530661-s728h4rlgc4f63tnjaeg13s7dvb19vnk.apps.googleusercontent.com"}).then(response => {
+  client.verifyIdToken({idToken: tokenId, audience:clientID}).then(response => {
     const{email_verified, name, email} = response.payload;
     console.log("0")
     if(email_verified)
