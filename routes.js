@@ -15,7 +15,8 @@ const {
   listQuestions,
   listByTags,
   listByUser,
-  removeQuestion
+  removeQuestion, 
+  editQuestion
 } = require('./controllers/questions');
 const {
   loadAnswers,
@@ -25,7 +26,7 @@ const {
 } = require('./controllers/answers');
 const { listPopulerTags, searchTags, listTags } = require('./controllers/tags');
 const { upvote, downvote, unvote } = require('./controllers/votes');
-const { loadComments, validate, createComment, removeComment } = require('./controllers/comments');
+const { loadComments, validate, createComment, removeComment, editComment } = require('./controllers/comments');
 
 const requireAuth = require('./middlewares/requireAuth');
 const questionAuth = require('./middlewares/questionAuth');
@@ -52,6 +53,7 @@ router.get('/question', listQuestions);
 router.get('/questions/:tags', listByTags);
 router.get('/question/user/:username', listByUser);
 router.delete('/question/:question', [requireAuth, questionAuth], removeQuestion);
+router.put('/question/:question', [requireAuth, questionAuth, questionValidate], editQuestion);
 
 //tags
 router.get('/tags/populertags', listPopulerTags);
@@ -73,6 +75,8 @@ router.param('comment', loadComments);
 router.post('/comment/:question/:answer?', [requireAuth, validate], createComment);
 router.delete('/comment/:question/:comment', [requireAuth, commentAuth], removeComment);
 router.delete('/comment/:question/:answer/:comment', [requireAuth, commentAuth], removeComment);
+router.put('/comment/:question/:comment', [requireAuth, commentAuth, validate], editComment);
+router.put('/comment/:question/:answer/:comment', [requireAuth, commentAuth, validate], editComment);
 
 module.exports = (app) => {
   app.use('/api', router);

@@ -36,6 +36,26 @@ exports.createQuestion = async (req, res, next) => {
   }
 };
 
+exports.editQuestion = async (req, res, next) => {
+  const result = validationResult(req);
+  if (!result.isEmpty()) {
+    const errors = result.array({ onlyFirstError: true });
+    return res.status(422).json({ errors });
+  }
+  const updatedQuestion = req.question;
+  updatedQuestion.title = req.body.title;
+  updatedQuestion.text = req.body.text;
+  updatedQuestion.tags = req.body.tags;
+  updatedQuestion.edited = true;
+  updatedQuestion.author = req.user.id;
+  try{
+    const question = await Question.findByIdAndUpdate(req.params.question, { $set: updatedQuestion }, { new: true });
+    res.status(201).json(question);
+  }catch(error){
+    next(error);
+  }
+}
+
 exports.show = async (req, res, next) => {
   try {
     const { id } = req.question;
