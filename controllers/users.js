@@ -189,72 +189,11 @@ exports.googlelogin = (req,res) => {
               console.log("yes")
               res.json( {status:true})
             }
-        //     const  username  = up[0];
-        //     const hashedPassword = await hashPassword(username);
-        
-        //     const userData = {
-        //       username: username.toLowerCase(),
-        //       password: hashedPassword
-        //     };
-        //     console.log(userData)
-        //     console.log("0")
-        //     const existingUsername = await User.findOne({
-        //       username: userData.username
-        //     });
-        //     console.log("1")
-        //     console.log(existingUsername)
-        //     if (existingUsername) {
-        //       console.log(("1.5"))
-        //       return res.status(400).json({
-        //         message: 'Username already exists.'
-        //       });
-        //     }
-        // console.log("2")
-        //     const newUser = new User(userData);
-        //     console.log(newUser)
-        //     const savedUser = await newUser.save();
-            
-        //     if (savedUser) {
-        //       // console.log(savedUser)
-        //       console.log("0")
-        //       // const token = createToken(savedUser);
-        //       // const decodedToken = jwtDecode(token);
-        //       // const expiresAt = decodedToken.exp;
-        //   console.log("1")
-        //       const { username, role, id, created, profilePhoto } = newUser;
-        //       const userInfo = {
-        //         username,
-        //         role,
-        //         id,
-        //         created,
-        //         profilePhoto
-        //       };
-        //       console.log(userInfo)
-        //     } 
-        //     else {
-        //       return res.status(400).json({
-        //         message: 'There was a problem creating your account.'
-        //       });
-        //     }
-}
-else{
-         return res.status(400).json({
-                message: 'There was a problem creating your account.'
-              });
-}
+    }
+    else{
+            return res.status(400).json({
+             message: 'There was a problem creating your account.'
+             });
+    }
   })
 }
-
-// exports.googleautho = async (req, res, next) => {
-//   console.log("I am in above try")
-//   try {
-//     console.log("I am in get");
-//     console.log(req.body.data);
-//     const response = await req.body ;
-//     console.log(response)
-//     res.json(req.body);
-    
-//   } catch (error) {
-//     next(error);
-//   }
-// };
