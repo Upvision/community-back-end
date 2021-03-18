@@ -3,6 +3,7 @@ const {
   signup,
   authenticate,
   googlelogin,
+  googleautho,
   listUsers,
   search,
   find

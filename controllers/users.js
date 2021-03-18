@@ -183,9 +183,7 @@ exports.googlelogin = (req,res) => {
             var up = email.split('@');
             if(up[1]!= "nitdelhi.ac.in")
             {
-              return res.json({
-                message: 'Kindly choose the College Mail Id.'
-              });
+              res.json( {status:false})
             }
             else{
               console.log("yes")
@@ -246,3 +244,17 @@ else{
 }
   })
 }
+
+// exports.googleautho = async (req, res, next) => {
+//   console.log("I am in above try")
+//   try {
+//     console.log("I am in get");
+//     console.log(req.body.data);
+//     const response = await req.body ;
+//     console.log(response)
+//     res.json(req.body);
+    
+//   } catch (error) {
+//     next(error);
+//   }
+// };
